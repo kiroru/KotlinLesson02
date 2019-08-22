@@ -1,0 +1,13 @@
+<resources>
+
+    <string name="app_name">KotlinLesson02</string>
+
+    <string name="image_description">Image</string>
+    <string name="cell_title">タイトル_</string>
+    <string name="cell_description">説明_</string>
+
+    <string name="default_title">Title</string>
+    <string name="default_description">Description</string>
+    <string name="close_button">閉じる</string>
+
+</resources>
