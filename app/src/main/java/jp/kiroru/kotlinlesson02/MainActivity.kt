@@ -5,19 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import kotlinx.android.synthetic.main.cell_main.view.*
 
 
 data class Item(val title: String, val description: String)
 
-interface ItemSelectionListener {
-    fun notifyItemSelected(item: Item)
-}
-
-class MainActivity : AppCompatActivity(), ItemSelectionListener {
+class MainActivity : AppCompatActivity(), CustomAdapter.ItemSelectionListener {
 
     private val items = mutableListOf<Item>()
 
@@ -34,7 +26,7 @@ class MainActivity : AppCompatActivity(), ItemSelectionListener {
         val view = findViewById<RecyclerView>(R.id.recyclerView)
         with(view) {
             layoutManager = LinearLayoutManager(context)
-            adapter = MyAdapter(items, this@MainActivity)
+            adapter = CustomAdapter(items, this@MainActivity)
         }
     }
 
@@ -44,32 +36,6 @@ class MainActivity : AppCompatActivity(), ItemSelectionListener {
         intent.putExtra("title", item.title)
         intent.putExtra("description", item.description)
         startActivity(intent)
-    }
-
-}
-
-class MyAdapter(private val items: List<Item>, private val listener: ItemSelectionListener): RecyclerView.Adapter<MyAdapter.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_main, parent, false)
-        return ViewHolder(view).apply {
-            view.setOnClickListener {
-                listener.notifyItemSelected(items[adapterPosition])
-            }
-        }
-    }
-
-    override fun getItemCount() = items.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = items[position]
-        holder.cellTitle.text = item.title
-        holder.cellDescription.text = item.description
-    }
-
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val cellTitle = view.cellTitle!!
-        val cellDescription = view.cellDescription!!
     }
 
 }
