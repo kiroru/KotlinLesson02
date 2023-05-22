@@ -1,17 +1,17 @@
 package jp.kiroru.kotlinlesson02
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.cell_main.view.*
+import jp.kiroru.kotlinlesson02.databinding.CellMainBinding
 
 class CustomAdapter(private val items: List<Item>, private val listener: ItemSelectionListener): RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.cell_main, parent, false)
-        return ViewHolder(view).apply {
-            view.setOnClickListener {
+
+        val binding = CellMainBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ViewHolder(binding).apply {
+            binding.root.setOnClickListener {
                 listener.notifyItemSelected(items[adapterPosition])
             }
         }
@@ -25,9 +25,9 @@ class CustomAdapter(private val items: List<Item>, private val listener: ItemSel
         holder.cellDescription.text = item.description
     }
 
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val cellTitle = view.cellTitle!!
-        val cellDescription = view.cellDescription!!
+    class ViewHolder(binding: CellMainBinding) : RecyclerView.ViewHolder(binding.root) {
+        val cellTitle = binding.cellTitle
+        val cellDescription = binding.cellDescription
     }
 
     interface ItemSelectionListener {
